@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ejemplo de Archivos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h1>Carga de Archivos</h1>
+            <form id="formulario" method="POST" enctype="multipart/form-data">
+                <input type="file" name="files" /><br />
+                <input type="file" name="files" /><br />
+                <input type="submit" value="Enviar" id="btnSubmit" /><br />
+            </form>
+        </div>
+        <script>
+            formulario.onsubmit = async (e) => {
+                e.preventDefault();
+                const API_URL = "http://localhost:8080";
+                const options = {
+                    method: "POST",
+                    body: new FormData(formulario)
+                };
+                fetch(`${API_URL}/files/upload`, options)
+                        .then((response) => response.json())
+                        .then((response) => {
+                            if (response.ok) {
+                                alert("Guardado correctamente");
+                                console.log(response);
+                            } else {
+                                throw new Error(response.message);
+                            }
+                        })
+                        .catch((exception) => {
+                            alert(exception);
+                            console.log(exception);
+                        });
+            };
+        </script>
+    </body>
+</html>
+
+
